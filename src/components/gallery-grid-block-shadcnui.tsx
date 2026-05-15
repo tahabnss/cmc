@@ -96,32 +96,25 @@ export function GalleryGridBlock() {
   };
 
   return (
-    <section
-      className="w-full bg-background px-4 py-16"
-      aria-labelledby="gallery-heading"
-    >
-      <div className="mx-auto max-w-7xl">
+    <section className="w-full bg-background" aria-labelledby="gallery-heading">
+      <div className="mx-auto max-w-7xl px-6 py-28 sm:py-36">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
           role="region"
           aria-labelledby="gallery-heading"
         >
-          <Badge className="mb-4" variant="secondary">
-            <Grid className="mr-1 h-3 w-3" />
+          <div className="flex items-center gap-2 text-xs text-muted-foreground tracking-widest uppercase mb-6">
+            <span className="inline-block w-8 h-px bg-accent" />
             Galerie
-          </Badge>
+          </div>
           <h2
             id="gallery-heading"
-            className="mb-4 text-4xl font-bold tracking-tight"
+            className="text-3xl sm:text-5xl font-bold tracking-tight leading-[1.05] max-w-xl"
           >
-            Nos Réalisations
+            Ce qu&apos;on a fait
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
-            Découvrez notre collection de carreaux et revêtements
-          </p>
         </motion.div>
 
         {/* Filter Buttons */}
@@ -129,20 +122,23 @@ export function GalleryGridBlock() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-8 flex flex-wrap justify-center gap-2"
+          className="mt-8 mb-10 flex flex-wrap gap-1.5 border-b border-border pb-4"
           role="group"
-          aria-label="Gallery categories"
+          aria-label="Catégories"
         >
           {categories.map((category) => (
-            <Button
+            <button
               key={category}
-              variant={filter === category ? "default" : "outline"}
-              size="sm"
               onClick={() => setFilter(category)}
+              className={`text-xs tracking-wider uppercase px-3 py-1.5 transition-colors cursor-pointer ${
+                filter === category
+                  ? "text-accent border-b-2 border-accent -mb-[17px]"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
               aria-pressed={filter === category}
             >
               {category}
-            </Button>
+            </button>
           ))}
         </motion.div>
 
@@ -165,7 +161,7 @@ export function GalleryGridBlock() {
                 role="listitem"
               >
                 <Card
-                  className="group relative cursor-pointer overflow-hidden border-border transition-all hover:border-ring hover:shadow-xl"
+                  className="group relative cursor-pointer overflow-hidden border-border surface-card transition-all hover:border-accent/30"
                   onClick={() => setSelectedImage(image.id)}
                   onKeyDown={(event) => handleCardKeyDown(event, image.id)}
                   role="button"
@@ -177,20 +173,19 @@ export function GalleryGridBlock() {
                       src={image.url}
                       alt={image.title}
                       className="h-full w-full object-cover"
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.3 }}
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.5 }}
                     />
 
-                    {/* Overlay */}
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm"
+                      className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a0e17]/80"
                       aria-hidden="true"
                     >
-                      <ZoomIn className="mb-2 h-8 w-8 text-[var(--muted-foreground)]" />
-                      <h3 className="mb-1 text-center text-lg font-semibold text-[var(--muted-foreground)]">
+                      <ZoomIn className="mb-2 h-8 w-8 text-white/60" />
+                      <h3 className="mb-1 text-center text-lg font-semibold text-white">
                         {image.title}
                       </h3>
                       <Badge variant="secondary">{image.category}</Badge>
@@ -239,7 +234,7 @@ export function GalleryGridBlock() {
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)] hover:bg-white/10"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60 hover:bg-white/10"
                   onClick={(e) => {
                     e.stopPropagation();
                     handlePrev();
@@ -251,7 +246,7 @@ export function GalleryGridBlock() {
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)] hover:bg-white/10"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:bg-white/10"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleNext();
@@ -277,7 +272,7 @@ export function GalleryGridBlock() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="mt-4 text-center text-[var(--muted-foreground)]"
+                  className="mt-4 text-center text-white/60"
                   id="gallery-dialog-description"
                 >
                   <h3
