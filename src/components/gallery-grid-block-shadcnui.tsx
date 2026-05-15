@@ -4,8 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Grid, X, ZoomIn } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 import { KeyboardEvent, useState } from "react";
+import { TiltCard } from "@/components/tilt-card";
 
 const galleryImages = [
   {
@@ -160,38 +161,40 @@ export function GalleryGridBlock() {
                 transition={{ duration: 0.3, delay: index * 0.05 }}
                 role="listitem"
               >
-                <Card
-                  className="group relative cursor-pointer overflow-hidden border-border surface-card transition-all hover:border-accent/30"
-                  onClick={() => setSelectedImage(image.id)}
-                  onKeyDown={(event) => handleCardKeyDown(event, image.id)}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Voir détails: ${image.title}`}
-                >
-                  <div className="relative aspect-square overflow-hidden">
-                    <motion.img
-                      src={image.url}
-                      alt={image.title}
-                      className="h-full w-full object-cover"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.5 }}
-                    />
+                <TiltCard>
+                  <Card
+                    className="group relative cursor-pointer overflow-hidden border-border surface-card transition-all hover:border-accent/30"
+                    onClick={() => setSelectedImage(image.id)}
+                    onKeyDown={(event) => handleCardKeyDown(event, image.id)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Voir détails: ${image.title}`}
+                  >
+                    <div className="relative aspect-square overflow-hidden">
+                      <motion.img
+                        src={image.url}
+                        alt={image.title}
+                        className="h-full w-full object-cover"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.5 }}
+                      />
 
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a0e17]/80"
-                      aria-hidden="true"
-                    >
-                      <ZoomIn className="mb-2 h-8 w-8 text-white/60" />
-                      <h3 className="mb-1 text-center text-lg font-semibold text-white">
-                        {image.title}
-                      </h3>
-                      <Badge variant="secondary">{image.category}</Badge>
-                    </motion.div>
-                  </div>
-                </Card>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a0e17]/80"
+                        aria-hidden="true"
+                      >
+                        <ZoomIn className="mb-2 h-8 w-8 text-white/60" />
+                        <h3 className="mb-1 text-center text-lg font-semibold text-white">
+                          {image.title}
+                        </h3>
+                        <Badge variant="secondary">{image.category}</Badge>
+                      </motion.div>
+                    </div>
+                  </Card>
+                </TiltCard>
               </motion.div>
             ))}
           </AnimatePresence>

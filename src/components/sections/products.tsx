@@ -2,30 +2,27 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { TiltCard } from "@/components/tilt-card";
 
 const products = [
   {
     name: "Carreaux Ciment",
     desc: "Fabrication artisanale aux motifs géométriques. Une tradition algérienne dans chaque pièce.",
-    pattern: "bg-[#c24f1a]",
     accent: "#c24f1a",
   },
   {
     name: "Dalles Grès",
     desc: "Grès cérame haute résistance. Pour l'intérieur comme pour l'extérieur.",
-    pattern: "bg-[#8b7d71]",
     accent: "#8b7d71",
   },
   {
     name: "Carreaux Muraux",
     desc: "Décoration murale pour cuisines et salles de bain. Fini opaque, mat ou brillant.",
-    pattern: "bg-[#6b5e53]",
     accent: "#6b5e53",
   },
   {
     name: "Dalles de Sol",
     desc: "Robustesse et esthétique pour espaces commerciaux et résidentiels à fort trafic.",
-    pattern: "bg-[#d4561a]",
     accent: "#d4561a",
   },
 ];
@@ -60,26 +57,27 @@ export function Products() {
           </p>
         </motion.div>
 
-        <div className="mt-14 grid gap-px sm:grid-cols-2 lg:grid-cols-4 border-border overflow-hidden">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((p, i) => (
             <motion.div
               key={p.name}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: 0.1 * i }}
-              className="surface-card hover:bg-muted/50 transition-colors duration-300 p-8 flex flex-col"
             >
-              <div
-                className="w-full aspect-square mb-6 rounded-sm"
-                style={{
-                  backgroundImage: diamondPattern(p.accent),
-                  backgroundColor: `${p.accent}08`,
-                  border: `1px solid ${p.accent}20`,
-                }}
-              />
-              <h3 className="text-lg font-semibold tracking-tight mb-2">{p.name}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed flex-1">{p.desc}</p>
-              <div className="industrial-line mt-6" />
+              <TiltCard className="surface-card h-full flex flex-col p-8 border border-border">
+                <div
+                  className="w-full aspect-square mb-6 rounded-sm"
+                  style={{
+                    backgroundImage: diamondPattern(p.accent),
+                    backgroundColor: `${p.accent}08`,
+                    border: `1px solid ${p.accent}20`,
+                  }}
+                />
+                <h3 className="text-lg font-semibold tracking-tight mb-2">{p.name}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1">{p.desc}</p>
+                <div className="industrial-line mt-6" />
+              </TiltCard>
             </motion.div>
           ))}
         </div>
