@@ -83,7 +83,7 @@ const HeroSection = () => {
           style={{ bottom: "30%", right: "20%" }}
         />
 
-        <div className="relative z-10 flex flex-col items-center text-center justify-center min-h-screen px-6">
+        <div className="relative z-10 flex flex-col items-center text-center justify-center min-h-screen px-6 pt-24">
           <h1
             className="font-bold text-foreground text-5xl lg:text-[96px] leading-[1.05] tracking-[-0.02em] max-w-5xl"
             style={{
