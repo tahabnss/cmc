@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { CursorGlow } from "@/components/cursor-glow";
 import "./globals.css";
 
 const inter = Inter({
@@ -19,8 +20,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fr" className={`${inter.variable} dark h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
-        <ThemeProvider>{children}</ThemeProvider>
+      <body className="min-h-full flex flex-col noise">
+        <ThemeProvider>
+          <CursorGlow />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

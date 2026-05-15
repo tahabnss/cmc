@@ -27,8 +27,8 @@ const products = [
   },
 ];
 
-const diamondPattern = (color: string) =>
-  `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='${encodeURIComponent(color)}' opacity='0.15'/%3E%3C/svg%3E")`;
+const diamondSVG = (color: string) =>
+  `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 2L58 30L30 58L2 30Z' fill='${encodeURIComponent(color)}' opacity='0.12'/%3E%3C/svg%3E")`;
 
 export function Products() {
   const ref = useRef(null);
@@ -36,14 +36,14 @@ export function Products() {
 
   return (
     <section id="products" className="relative py-28 sm:py-36 overflow-hidden">
-      <div className="absolute inset-0 diamond-grid opacity-30" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-[120px]" />
+      <div className="absolute inset-0 diamond-grid opacity-40" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 blur-[120px]" />
 
       <div ref={ref} className="relative z-10 mx-auto max-w-7xl px-6">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           className="max-w-xl"
         >
           <div className="flex items-center gap-2 text-xs text-muted-foreground tracking-widest uppercase mb-6">
@@ -61,22 +61,31 @@ export function Products() {
           {products.map((p, i) => (
             <motion.div
               key={p.name}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.1 * i }}
+              transition={{ duration: 0.5, delay: 0.08 * i, ease: [0.23, 1, 0.32, 1] }}
             >
-              <TiltCard className="surface-card h-full flex flex-col p-8 border border-border">
+              <TiltCard className="surface-card h-full flex flex-col p-8 border border-border group hover:border-accent/30 transition-colors duration-500" maxRotate={8} scale={1.03}>
                 <div
-                  className="w-full aspect-square mb-6 rounded-sm"
+                  className="w-full aspect-square mb-6 rounded-sm overflow-hidden relative"
                   style={{
-                    backgroundImage: diamondPattern(p.accent),
+                    backgroundImage: diamondSVG(p.accent),
                     backgroundColor: `${p.accent}08`,
-                    border: `1px solid ${p.accent}20`,
                   }}
-                />
-                <h3 className="text-lg font-semibold tracking-tight mb-2">{p.name}</h3>
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background: `radial-gradient(circle at 50% 50%, ${p.accent}20, transparent 70%)`,
+                    }}
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-accent/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  />
+                </div>
+                <h3 className="text-lg font-semibold tracking-tight mb-2 group-hover:text-accent transition-colors duration-300">{p.name}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed flex-1">{p.desc}</p>
-                <div className="industrial-line mt-6" />
+                <div className="industrial-line mt-6 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
               </TiltCard>
             </motion.div>
           ))}
