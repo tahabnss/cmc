@@ -2,14 +2,51 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { MapPin, Phone, Mail, Send } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, ExternalLink } from "lucide-react";
 
-const contactInfo = [
-  { icon: MapPin, label: "Adresse", value: "ZI Rouiba, voie H lot B54, BP 123, Rouiba, Alger" },
-  { icon: Phone, label: "Téléphone", value: "+213 23 86 41 51" },
-  { icon: Phone, label: "Mobile", value: "+213 561 18 16 25" },
-  { icon: Mail, label: "Email", value: "sarlcmcrouiba@gmail.com" },
+const contactOptions = [
+  {
+    icon: Phone,
+    label: "Appel",
+    value: "+213 23 86 41 51",
+    href: "tel:+21323864151",
+    desc: "Ligne directe",
+  },
+  {
+    icon: Phone,
+    label: "Mobile",
+    value: "+213 561 18 16 25",
+    href: "tel:+213561181625",
+    desc: "Disponible 6j/7",
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    value: "+213 561 18 16 25",
+    href: "https://wa.me/+213561181625",
+    desc: "Réponse rapide",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: "sarlcmcrouiba@gmail.com",
+    href: "mailto:sarlcmcrouiba@gmail.com",
+    desc: "Réponse sous 24h",
+  },
+  {
+    icon: ExternalLink,
+    label: "Facebook",
+    value: "CMC Rouiba",
+    href: "https://web.facebook.com/CMCROUIBA",
+    desc: "16K+ abonnés",
+  },
+  {
+    icon: MapPin,
+    label: "Adresse",
+    value: "ZI Rouiba, voie H lot B54",
+    href: "https://maps.google.com/?q=ZI+Rouiba+voie+H+lot+B54+Alger",
+    desc: "Alger, Algérie",
+  },
 ];
 
 export function Contact() {
@@ -36,77 +73,28 @@ export function Contact() {
           </h2>
         </motion.div>
 
-        <div className="mt-14 grid gap-10 lg:grid-cols-5">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-2 space-y-4"
-          >
-            {contactInfo.map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: 10 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.3, delay: 0.25 + i * 0.06 }}
-                className="surface-card rounded-sm p-5 flex items-start gap-4 border-l-2 border-accent/30"
-              >
-                <item.icon className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                <div>
-                  <p className="text-xs text-muted-foreground">{item.label}</p>
-                  <p className="text-sm font-medium mt-0.5">{item.value}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="lg:col-span-3"
-          >
-            <form className="surface-card rounded-sm p-8 space-y-5">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div>
-                  <label className="text-xs font-medium mb-1.5 block text-muted-foreground uppercase tracking-wider">Nom</label>
-                  <input
-                    type="text"
-                    placeholder="Votre nom"
-                    className="w-full rounded-sm border border-border bg-transparent px-4 py-2.5 text-sm outline-none focus:border-accent/50 transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-medium mb-1.5 block text-muted-foreground uppercase tracking-wider">Email</label>
-                  <input
-                    type="email"
-                    placeholder="votre@email.com"
-                    className="w-full rounded-sm border border-border bg-transparent px-4 py-2.5 text-sm outline-none focus:border-accent/50 transition-all"
-                  />
-                </div>
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {contactOptions.map((opt, i) => (
+            <motion.a
+              key={opt.label}
+              href={opt.href}
+              target={opt.href.startsWith("http") ? "_blank" : undefined}
+              rel={opt.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
+              className="surface-card group rounded-sm p-6 flex items-center gap-5 border border-border hover:border-accent/30 hover:bg-muted/30 transition-all duration-200"
+            >
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-accent/10 text-accent group-hover:bg-accent group-hover:text-accent-foreground transition-all duration-200">
+                <opt.icon className="h-5 w-5" />
               </div>
-              <div>
-                <label className="text-xs font-medium mb-1.5 block text-muted-foreground uppercase tracking-wider">Téléphone</label>
-                <input
-                  type="tel"
-                  placeholder="+213 XX XX XX XX"
-                  className="w-full rounded-sm border border-border bg-transparent px-4 py-2.5 text-sm outline-none focus:border-accent/50 transition-all"
-                />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-muted-foreground tracking-wider uppercase">{opt.label}</p>
+                <p className="text-sm font-medium mt-0.5 truncate">{opt.value}</p>
+                <p className="text-xs text-muted-foreground/60 mt-0.5">{opt.desc}</p>
               </div>
-              <div>
-                <label className="text-xs font-medium mb-1.5 block text-muted-foreground uppercase tracking-wider">Message</label>
-                <textarea
-                  rows={4}
-                  placeholder="Parlez-nous de votre projet..."
-                  className="w-full rounded-sm border border-border bg-transparent px-4 py-2.5 text-sm outline-none focus:border-accent/50 transition-all resize-none"
-                />
-              </div>
-              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground cursor-pointer rounded-sm">
-                <Send className="mr-2 h-4 w-4" />
-                Envoyer
-              </Button>
-            </form>
-          </motion.div>
+            </motion.a>
+          ))}
         </div>
       </div>
     </section>

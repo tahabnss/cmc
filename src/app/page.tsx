@@ -1,4 +1,4 @@
-import { Hero } from "@/components/sections/hero";
+import { HeroSection } from "@/components/ui/glass-video-hero";
 import { About } from "@/components/sections/about";
 import { Products } from "@/components/sections/products";
 import { GalleryGridBlock } from "@/components/gallery-grid-block-shadcnui";
@@ -8,7 +8,7 @@ import { Footer } from "@/components/sections/footer";
 export default function Home() {
   return (
     <>
-      <Hero />
+      <HeroSection />
       <About />
       <Products />
       <section id="gallery">
